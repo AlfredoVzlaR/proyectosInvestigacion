@@ -57,11 +57,6 @@ public class FachadaProyectos implements ILogica{
     public boolean registrarProyecto(Proyectos proyecto) {
         return ctrlRegistrar.registrarProyecto(proyecto);
     }
-
-//    @Override
-//    public List<Profesor> consultarTodosProfesores() {
-//        return ctrl.consultarTodosProfesores();
-//    }
     
     @Override
     public List<Doctor> consultarDoctores() {

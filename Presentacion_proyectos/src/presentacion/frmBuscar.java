@@ -163,7 +163,7 @@ public class frmBuscar extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbProfesores = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botonEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar proyecto");
@@ -271,10 +271,10 @@ public class frmBuscar extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel5.setText("Profesores.");
 
-        jButton1.setText("Editar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonEditar.setText("Editar");
+        botonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonEditarActionPerformed(evt);
             }
         });
 
@@ -300,7 +300,7 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addComponent(botonBuscar))
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
-                    .addComponent(jButton1))
+                    .addComponent(botonEditar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
@@ -336,7 +336,7 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(botonEditar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE))
                 .addContainerGap())
@@ -379,12 +379,12 @@ public class frmBuscar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
        Proyectos proyecto = FabricaLogica.getInstancia().consultarProyectos(proyectoSeleccionado(),0);
        frmEdicionProyecto frmEdicion = new frmEdicionProyecto();
        frmEdicion.setVisible(true);
        frmEdicion.abrirBuscarProyecto(proyecto);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonEditarActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -423,10 +423,10 @@ public class frmBuscar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonEditar;
     private javax.swing.JComboBox<String> comboBoxBusqueda;
     private com.toedter.calendar.JDateChooser fechaFin;
     private com.toedter.calendar.JDateChooser fechaInicio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

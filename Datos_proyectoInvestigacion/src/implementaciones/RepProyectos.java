@@ -4,7 +4,7 @@
  */
 package implementaciones;
 
-import com.mongodb.BasicDBObject;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -14,15 +14,10 @@ import dominio.NoDoctor;
 import dominio.Proyectos;
 import interfaces.IConexionBD;
 import interfaces.IRepProyectos;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bson.Document;
 
 /**
