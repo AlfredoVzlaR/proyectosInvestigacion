@@ -26,4 +26,5 @@ public interface IRepProyectos {
     boolean actualizarProyecto(Proyectos proyecto);
     List<Proyectos> consultarProyectosPeriodo(Date inicio,Date fin);
     List<Proyectos> consultarProyectos();
+    List<Proyectos> consultarTodosProyectos();
 }

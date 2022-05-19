@@ -67,11 +67,11 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
                 return false;
             }
             proyecto.setProfesores(profesoresParticipantes);
-            if(FabricaLogica.getInstancia().verificarRegistrarProyecto(proyecto)==true){
+            
                 FabricaLogica.getInstancia().registrarProyecto(proyecto); 
                 limpiar();
                 return true;
-            }
+            
         }
         return false;
     }
@@ -167,6 +167,11 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
         });
 
         txtPresupuesto.setText("0");
+        txtPresupuesto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPresupuestoKeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Programa de Investigación");
@@ -524,6 +529,15 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtDesarrolloKeyTyped
+
+    private void txtPresupuestoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresupuestoKeyTyped
+        char c = evt.getKeyChar();
+        
+        if((c<'0'||c>'9')&&c!='.')
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPresupuestoKeyTyped
 
     private void limpiar(){
         txtPrograma.setText("");

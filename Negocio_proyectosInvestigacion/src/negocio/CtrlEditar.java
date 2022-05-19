@@ -38,16 +38,16 @@ public class CtrlEditar {
         }
     }
     public boolean verificarActualizar(Proyectos proyecto){
-        List<Proyectos> proyectos = FabricaProyectos.getInstancia().consultarProyectos();
+        List<Proyectos> proyectos = FabricaProyectos.getInstanciaRep().consultarTodosProyectos();
         
-        for(Proyectos proyectosVerificar:proyectos){
-            if((proyectosVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())||proyectosVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo()))){
-                if(proyectosVerificar.getCodigo().equalsIgnoreCase(proyecto.getCodigo())){
-                    FabricaProyectos.getInstanciaRep().actualizarProyecto(proyecto);
-                    return true;
-                }      
-                JOptionPane.showMessageDialog(null,"Ya existe un proyecto con este nombre o acrónimo.","Error.",JOptionPane.ERROR_MESSAGE);
+        for(Proyectos proyectoVerificar:proyectos){
+            if(proyectoVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())
+                    ||proyectoVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo())){
+                JOptionPane.showMessageDialog(null,"Ya existe un proyecto con ese código,nombre,acrónimo.","Error!", JOptionPane.ERROR_MESSAGE);
                 return false;
+            }
+            else{
+                return true;
             }
         }
         return true;

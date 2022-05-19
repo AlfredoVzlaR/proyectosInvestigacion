@@ -5,6 +5,7 @@
 package presentacion;
 
 import dominio.Proyectos;
+import implementaciones.FabricaProyectos;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +38,9 @@ public class frmProyectosEncontrados extends javax.swing.JFrame {
         List<Proyectos> list = null;
         
 
-        list = FabricaLogica.getInstancia().consultarProyectos();
+        list = FabricaProyectos.getInstanciaRep().consultarProyectos();
+        
+        System.out.println(list);
 
         if (list == null) {
             JOptionPane.showMessageDialog(this, "No se ha encontrado nada");
@@ -47,10 +50,6 @@ public class frmProyectosEncontrados extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbProyectos.getModel();
         int rowCount = model.getRowCount();
         
-        //Remove rows one by one from the end of the table
-        for (int i = rowCount - 1; i >= 0; i--) {
-          model.removeRow(i);
-        }
         
         Object rowData[]=new Object[1];
         for(int i=0; i <list.size();i++){

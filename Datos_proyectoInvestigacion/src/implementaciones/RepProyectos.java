@@ -141,7 +141,14 @@ public class RepProyectos implements IRepProyectos {
     public List<Proyectos> consultarProyectos() {
         MongoCollection <Proyectos> coleccion = this.getCollection();
         List<Proyectos> listaProyectos = new LinkedList();
-        coleccion.find(new Document().append("fechaFinalizacion", new Document().append("$gt", new Date()))).into(listaProyectos);
+        coleccion.find(new Document().append("fechaFinalizacion", new Document().append("$gte", new Date()))).into(listaProyectos);
+        return listaProyectos;
+    }
+    @Override
+    public List<Proyectos> consultarTodosProyectos() {
+        MongoCollection <Proyectos> coleccion = this.getCollection();
+        List<Proyectos> listaProyectos = new LinkedList();
+        coleccion.find(new Document().append("fechaFinalizacion", new Document().append("$gte", new Date()))).into(listaProyectos);
         return listaProyectos;
     }
 }

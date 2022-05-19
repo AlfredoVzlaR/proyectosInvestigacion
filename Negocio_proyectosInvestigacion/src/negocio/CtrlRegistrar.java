@@ -60,11 +60,12 @@ public class CtrlRegistrar {
         return false;
     }
     public boolean verificarRegistrarProyecto(Proyectos proyecto){
-        List<Proyectos> proyectos = FabricaProyectos.getInstancia().consultarProyectos();
+        List<Proyectos> proyectos = FabricaProyectos.getInstanciaRep().consultarTodosProyectos();
         
         for(Proyectos proyectoVerificar:proyectos){
             if(proyectoVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())
-                    ||proyectoVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo())){
+               ||proyectoVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo())
+                    ||proyectoVerificar.getCodigo().equalsIgnoreCase(proyecto.getCodigo())){
                 JOptionPane.showMessageDialog(null,"Ya existe un proyecto con ese código,nombre,acrónimo.","Error!", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -72,7 +73,7 @@ public class CtrlRegistrar {
                 return true;
             }
         }
-        return true;
+        return false;
     }
 
 }
