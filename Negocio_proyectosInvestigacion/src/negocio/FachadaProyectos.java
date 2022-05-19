@@ -132,4 +132,9 @@ public class FachadaProyectos implements ILogica{
     public boolean verificaElementosSeleccionados(List list) {
         return ctrlEditar.verificaElementoSeleccionado(list);
     }
+
+    @Override
+    public boolean verificarActualizar(Proyectos proyecto) {
+       return ctrlEditar.verificarActualizar(proyecto);
+    }
 }

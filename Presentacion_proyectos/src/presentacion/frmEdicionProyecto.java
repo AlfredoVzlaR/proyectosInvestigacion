@@ -8,9 +8,7 @@ import dominio.Doctor;
 import dominio.NoDoctor;
 import dominio.Profesor;
 import dominio.Proyectos;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -22,8 +20,10 @@ import negocio.FabricaLogica;
  * @author Alfredo Valenzuela
  */
 public class frmEdicionProyecto extends javax.swing.JFrame {
+
     List<Profesor> profesoresParticipantes;
     DefaultListModel modeloIntegrantes = new DefaultListModel();
+
     /**
      * Creates new form frmEdicionProyecto
      */
@@ -33,10 +33,11 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         listParticipantes.setModel(modeloIntegrantes);
     }
 
-    protected void abrirBuscarProyecto(Proyectos proyecto) {        
+    protected void abrirBuscarProyecto(Proyectos proyecto) {
         mostrarDetallesProyecto(proyecto);
     }
-    public void mostrarDetallesProyecto(Proyectos proyecto){
+
+    public void mostrarDetallesProyecto(Proyectos proyecto) {
         txtCodigo.setText(proyecto.getCodigo());
         txtNombre.setText(proyecto.getNombre());
         txtAcronimo.setText(proyecto.getAcronimo());
@@ -48,12 +49,14 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         cbInvestigador.addItem(proyecto.getInvestigadorPrincipal());
         txtLinea.setText(proyecto.getLineaInvestigacion());
         txtPresupuesto.setText(String.valueOf(proyecto.getPresupuesto()));
-        try{
-        for(int a = 0; a < proyecto.getProfesores().size(); a++){
-            modeloIntegrantes.addElement(proyecto.getProfesores().get(a));
-            profesoresParticipantes.add(proyecto.getProfesores().get(a));
-        } }catch(Exception e){}
-        
+        try {
+            for (int a = 0; a < proyecto.getProfesores().size(); a++) {
+                modeloIntegrantes.addElement(proyecto.getProfesores().get(a));
+                profesoresParticipantes.add(proyecto.getProfesores().get(a));
+            }
+        } catch (Exception e) {
+        }
+
 //        proyecto.getProfesores().forEach(profesor
 //                -> {
 //            Object[] filaProfesor = new Object[4];
@@ -63,17 +66,16 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
 //            filaProfesor[3] = profesor.getTelefono() ;
 //            modeloTablaProfesores.addRow(filaProfesor);
 //        });
-        
         List<Doctor> doctores = FabricaLogica.getInstancia().consultarDoctores();
         List<NoDoctor> noDoctores = FabricaLogica.getInstancia().consultarNoDoctores();
-        
+
         List<Profesor> profesores = new ArrayList();
-        
+
         profesores.addAll(doctores);
         profesores.addAll(noDoctores);
-        
+
         DefaultTableModel modeloTablaDisponibles = (DefaultTableModel) tblDisponibles.getModel();
-        
+
         int rowCount = modeloTablaDisponibles.getRowCount();
 
         //Remove rows one by one from the end of the table
@@ -83,13 +85,13 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
 
         Object rowData[] = new Object[1];
         List<Profesor> listaProfesoresProyecto = proyecto.getProfesores();
-        
+
         for (int i = 0; i < profesores.size(); i++) {
-            
+
             rowData[0] = profesores.get(i);
             modeloTablaDisponibles.addRow(rowData);
         }
-        
+
 //        Object[] filaDisponible = new Object[4];
 //        for(int i=0;i<profesores.size();i++){
 //            try{
@@ -106,9 +108,36 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
 //            modeloTablaDisponibles.addRow(filaDisponible);
 //            }catch(Exception e){}
 //        }
-        
-        
     }
+
+    private boolean actualizar() {
+        if (FabricaLogica.getInstancia().verificaElementosSeleccionados(profesoresParticipantes)) {
+            Proyectos proyecto = new Proyectos();
+            proyecto.setCodigo(txtCodigo.getText());
+            proyecto.setNombre(txtNombre.getText());
+            proyecto.setAcronimo(txtAcronimo.getText());
+            proyecto.setProgramaInvestigacion(txtPrograma.getText());
+            proyecto.setInvestigadorPrincipal(cbInvestigador.getItemAt(0));
+            proyecto.setLineaInvestigacion(txtLinea.getText());
+            proyecto.setDesarrolloFinancia(txtDesarrollo.getText());
+            proyecto.setFechaInicio(fechaInicio.getDate());
+            proyecto.setFechaFinalizacion(fechaFin.getDate());
+            proyecto.setDescripcionObjetivos(txtDescripcion.getText());
+            proyecto.setPresupuesto(Double.parseDouble(txtPresupuesto.getText()));
+            
+            if(fechaInicio.getDate().after(fechaFin.getDate())){
+                JOptionPane.showMessageDialog(this, "La fecha inicial no puede ser mayor a la fecha de fin.", "Error!", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            proyecto.setProfesores(profesoresParticipantes);
+            if (FabricaLogica.getInstancia().verificarActualizar(proyecto)==true){
+                JOptionPane.showMessageDialog(this, "Se actualizó correctamente el proyecto.", "Éxito.", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -423,80 +452,56 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
-        if(FabricaLogica.getInstancia().verificaElementosSeleccionados(profesoresParticipantes)){
-        Proyectos proyecto = new Proyectos();
-        proyecto.setCodigo(txtCodigo.getText());
-        proyecto.setNombre(txtNombre.getText());
-        proyecto.setAcronimo(txtAcronimo.getText());
-        proyecto.setProgramaInvestigacion(txtPrograma.getText());
-        proyecto.setInvestigadorPrincipal(cbInvestigador.getItemAt(0));
-        proyecto.setLineaInvestigacion(txtLinea.getText());
-        proyecto.setDesarrolloFinancia(txtDesarrollo.getText());
-        proyecto.setFechaInicio(fechaInicio.getDate());
-        proyecto.setFechaFinalizacion(fechaFin.getDate());
-        proyecto.setDescripcionObjetivos(txtDescripcion.getText());
-        proyecto.setPresupuesto(Double.parseDouble(txtPresupuesto.getText()));
-        
-//        DefaultTableModel modeloTablaProfesores = (DefaultTableModel) this.tblParticipantes.getModel();
-//        for(int i=0;i<modeloTablaProfesores.getRowCount();i++){
-//             String nombre = (String) modeloTablaProfesores.getValueAt(i,0);
-//             String apellido = (String) modeloTablaProfesores.getValueAt(i,1);
-//             String despacho = (String) modeloTablaProfesores.getValueAt(i,2);
-//             String telefono = (String) modeloTablaProfesores.getValueAt(i,3);
-//             Profesor profe = new Profesor(nombre,apellido,despacho,telefono);
-//             profesores.add(profe);
-//        }
-        proyecto.setProfesores(profesoresParticipantes);
-        if(FabricaLogica.getInstancia().actualizarProyecto(proyecto)){JOptionPane.showMessageDialog(this,"Se actualizó correctamente el proyecto.","Éxito.",JOptionPane.INFORMATION_MESSAGE);dispose();}}
+       actualizar();
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void tblDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDisponiblesMouseClicked
-        int fila= tblDisponibles.getSelectedRow();
-        Profesor profesor = (Profesor) tblDisponibles.getValueAt(fila,0);
+        int fila = tblDisponibles.getSelectedRow();
+        Profesor profesor = (Profesor) tblDisponibles.getValueAt(fila, 0);
         agregarProfesorLista(profesor);
     }//GEN-LAST:event_tblDisponiblesMouseClicked
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        if(txtNombre.getText().length() >= 60){
+        if (txtNombre.getText().length() >= 60) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtAcronimoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcronimoKeyTyped
-        if(txtAcronimo.getText().length() >= 60){
+        if (txtAcronimo.getText().length() >= 60) {
             evt.consume();
         }
     }//GEN-LAST:event_txtAcronimoKeyTyped
 
     private void txtProgramaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProgramaKeyTyped
-        if(txtPrograma.getText().length() >= 60){
+        if (txtPrograma.getText().length() >= 60) {
             evt.consume();
         }
     }//GEN-LAST:event_txtProgramaKeyTyped
 
     private void txtPresupuestoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresupuestoKeyTyped
-        if(txtPresupuesto.getText().length() >= 60){
+        if (txtPresupuesto.getText().length() >= 60) {
             evt.consume();
         }
     }//GEN-LAST:event_txtPresupuestoKeyTyped
 
-    private boolean agregarProfesorLista(Profesor profesor){  
-        try{
-        if(modeloIntegrantes.contains(profesor)){
-            JOptionPane.showMessageDialog(this, "El profesor seleccionado ya se encuentra dentro de la lista");
-            return false;
-        }       
-        
-        modeloIntegrantes.addElement(profesor);
-        profesoresParticipantes.add(profesor);
-        
-        return true;
-        }catch(Exception e){
-            
+    private boolean agregarProfesorLista(Profesor profesor) {
+        try {
+            if (modeloIntegrantes.contains(profesor)) {
+                JOptionPane.showMessageDialog(this, "El profesor seleccionado ya se encuentra dentro de la lista");
+                return false;
+            }
+
+            modeloIntegrantes.addElement(profesor);
+            profesoresParticipantes.add(profesor);
+
+            return true;
+        } catch (Exception e) {
+
         }
         return true;
     }
-    
+
     /**
      * @param args the command line arguments
      */

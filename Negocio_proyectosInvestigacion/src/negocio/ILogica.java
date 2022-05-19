@@ -36,4 +36,5 @@ public interface ILogica {
     boolean registrarPublicacion(Publicaciones publicaciones, EnRevista revista);
     boolean registrarPublicacion(Publicaciones publicaciones, EnCongreso congreso);
     List<Proyectos> consultarProyectos();
+    boolean verificarActualizar(Proyectos proyecto);
 }

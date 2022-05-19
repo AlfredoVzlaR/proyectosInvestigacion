@@ -161,6 +161,7 @@ public class frmBuscar extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbProfesores = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -267,6 +268,8 @@ public class frmBuscar extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel5.setText("Profesores.");
 
+        jButton1.setText("Editar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -288,7 +291,8 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(botonBuscar))
                     .addComponent(jLabel1)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
@@ -322,7 +326,10 @@ public class frmBuscar extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -398,6 +405,7 @@ public class frmBuscar extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxBusqueda;
     private com.toedter.calendar.JDateChooser fechaFin;
     private com.toedter.calendar.JDateChooser fechaInicio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

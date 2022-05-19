@@ -37,4 +37,19 @@ public class CtrlEditar {
             return true;
         }
     }
+    public boolean verificarActualizar(Proyectos proyecto){
+        List<Proyectos> proyectos = FabricaProyectos.getInstancia().consultarProyectos();
+        
+        for(Proyectos proyectosVerificar:proyectos){
+            if((proyectosVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())||proyectosVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo()))){
+                if(proyectosVerificar.getCodigo().equalsIgnoreCase(proyecto.getCodigo())){
+                    FabricaProyectos.getInstanciaRep().actualizarProyecto(proyecto);
+                    return true;
+                }      
+                JOptionPane.showMessageDialog(null,"Ya existe un proyecto con este nombre o acrónimo.","Error.",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
 }
