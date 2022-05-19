@@ -33,7 +33,8 @@ public interface ILogica {
     boolean verificarInformacionAgregar(boolean tipo, String noSecuencia);
     boolean verificarPublicacion(String titulo);
     boolean verificaElementosSeleccionados(JTable table);
-    boolean verificaElementosSeleccionados(List list);
+    boolean verificaElementosSeleccionadosEditar(JTable table);
+    boolean verificarElementosSeleccionados(List list);
     boolean registrarPublicacion(Publicaciones publicaciones, EnRevista revista);
     boolean registrarPublicacion(Publicaciones publicaciones, EnCongreso congreso);
     List<Proyectos> consultarProyectos();

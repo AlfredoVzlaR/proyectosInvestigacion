@@ -8,6 +8,7 @@ import dominio.Doctor;
 import dominio.NoDoctor;
 import dominio.Profesor;
 import dominio.Proyectos;
+import implementaciones.FabricaProyectos;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -37,7 +38,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     }
 
     public void mostrarDetallesProyecto(Proyectos proyecto) {
-        txtLinea.setText(proyecto.getCodigo());
+        txtCodigo.setText(proyecto.getCodigo());
         txtNombre.setText(proyecto.getNombre());
         txtAcronimo.setText(proyecto.getAcronimo());
         txtPrograma.setText(proyecto.getProgramaInvestigacion());
@@ -46,7 +47,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         fechaInicio.setDate(proyecto.getFechaInicio());
         fechaFin.setDate(proyecto.getFechaFinalizacion());
         cbInvestigador.addItem(proyecto.getInvestigadorPrincipal());
-        txtCodigo.setText(proyecto.getLineaInvestigacion());
+        txtLinea.setText(proyecto.getLineaInvestigacion());
         txtPresupuesto.setText(String.valueOf(proyecto.getPresupuesto()));
         
         if(proyecto.getProfesores().isEmpty()){
@@ -88,19 +89,17 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
                 fila[3] = profesores.get(i).getTelefono();
                 modeloTablaDisponibles.addRow(fila);
             }
-            return;
         }}catch(Exception e){}
     }
 
     private boolean actualizar() {
-        if (FabricaLogica.getInstancia().verificaElementosSeleccionados(tbIntegrantes)) {
             Proyectos proyecto = new Proyectos();
-            proyecto.setCodigo(txtLinea.getText());
+            proyecto.setCodigo(txtCodigo.getText());
             proyecto.setNombre(txtNombre.getText());
             proyecto.setAcronimo(txtAcronimo.getText());
             proyecto.setProgramaInvestigacion(txtPrograma.getText());
             proyecto.setInvestigadorPrincipal(cbInvestigador.getItemAt(0));
-            proyecto.setLineaInvestigacion(txtCodigo.getText());
+            proyecto.setLineaInvestigacion(txtLinea.getText());
             proyecto.setDesarrolloFinancia(txtDesarrollo.getText());
             proyecto.setFechaInicio(fechaInicio.getDate());
             proyecto.setFechaFinalizacion(fechaFin.getDate());
@@ -111,22 +110,27 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "La fecha inicial no puede ser mayor a la fecha de fin.", "Error!", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+            
             List<Profesor> listaIntegrantes = new ArrayList<>();
+            try{
             for(int i=0;i<modeloTabla.getColumnCount();i++){
-                Profesor profesor=null;
+                Profesor profesor=new Profesor();
                 profesor.setNombre((String) modeloTabla.getValueAt(0,i));
                 profesor.setApellido((String) modeloTabla.getValueAt(1,i));
                 profesor.setDespacho((String) modeloTabla.getValueAt(2, i));
                 profesor.setTelefono((String) modeloTabla.getValueAt(3,i));
                 listaIntegrantes.add(profesor);
-            }
+            }}catch(Exception e){}
             proyecto.setProfesores(listaIntegrantes);
-            if (FabricaLogica.getInstancia().verificarActualizar(proyecto)==true){
-                JOptionPane.showMessageDialog(this, "Se actualizó correctamente el proyecto.", "Éxito.", JOptionPane.INFORMATION_MESSAGE);
+            
+            List<Proyectos> proyectosRegistrados = FabricaLogica.getInstancia().consultarProyectos();
+            
+            if(FabricaLogica.getInstancia().verificarActualizar(proyecto)==true){
+                FabricaLogica.getInstancia().actualizarProyecto(proyecto);
                 return true;
             }
-        }
-        return false;
+            
+            return false;
     }
 
     /**
@@ -185,7 +189,8 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Editar proyecto");
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Edición proyecto");
@@ -441,7 +446,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLineaActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
-        actualizar();        // TODO add your handling code here:
+        if(actualizar()==true){JOptionPane.showMessageDialog(this, "Se actualizó correctamente el proyecto.","Éxito.",JOptionPane.INFORMATION_MESSAGE);}
     }//GEN-LAST:event_botonActualizarActionPerformed
 
 //    private boolean agregarProfesorLista(Profesor profesor) {
@@ -449,7 +454,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
 //            if (modeloIntegrantes.contains(profesor)) {
 //                JOptionPane.showMessageDialog(this, "El profesor seleccionado ya se encuentra dentro de la lista");
 //                return false;
-//            }
+//            
 //
 //            modeloIntegrantes.addElement(profesor);
 //            profesoresParticipantes.add(profesor);
@@ -525,7 +530,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     private static javax.swing.JTextField txtAcronimo;
     private static javax.swing.JTextField txtCodigo;
     private static javax.swing.JTextField txtDesarrollo;
-    private javax.swing.JTextArea txtDescripcion;
+    private static javax.swing.JTextArea txtDescripcion;
     private static javax.swing.JTextField txtLinea;
     private static javax.swing.JTextField txtNombre;
     private static javax.swing.JTextField txtPresupuesto;

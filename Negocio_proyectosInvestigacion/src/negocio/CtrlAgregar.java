@@ -23,7 +23,7 @@ public class CtrlAgregar {
         return FabricaProyectos.getInstanciaRep().consultarProyectos();
     }
     
-    public boolean verificaElementoSeleccionado(JTable tabla){
+    public boolean verificarElementoSeleccionado(JTable tabla){
         if (tabla.getSelectedRowCount() >= 1){
             return true;
         } else {

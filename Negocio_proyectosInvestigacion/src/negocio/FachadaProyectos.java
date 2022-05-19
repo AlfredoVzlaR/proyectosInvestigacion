@@ -85,8 +85,8 @@ public class FachadaProyectos implements ILogica{
     }
 
     @Override
-    public boolean verificaElementosSeleccionados(JTable tabla) {
-       return ctrlAgregar.verificaElementoSeleccionado(tabla);
+    public boolean verificaElementosSeleccionados(JTable table) {
+       return ctrlAgregar.verificarElementoSeleccionado(table);
     }
     
     @Override
@@ -123,10 +123,6 @@ public class FachadaProyectos implements ILogica{
         return ctrlEditar.consultarProyectos();
     }
 
-    @Override
-    public boolean verificaElementosSeleccionados(List list) {
-        return ctrlEditar.verificaElementoSeleccionado(list);
-    }
 
     @Override
     public boolean verificarActualizar(Proyectos proyecto) {
@@ -136,5 +132,15 @@ public class FachadaProyectos implements ILogica{
     @Override
     public boolean verificarRegistrarProyecto(Proyectos proyecto) {
         return ctrlRegistrar.verificarRegistrarProyecto(proyecto);
+    }
+
+    @Override
+    public boolean verificarElementosSeleccionados(List list) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean verificaElementosSeleccionadosEditar(JTable table) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

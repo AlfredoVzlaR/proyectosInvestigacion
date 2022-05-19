@@ -122,7 +122,8 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtDesarrollo = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registrar proyecto");
         setResizable(false);
 
         tablaLineas.setModel(new javax.swing.table.DefaultTableModel(

@@ -380,6 +380,7 @@ public class frmBuscar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
     private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+       if(proyectoSeleccionado()==null){return;}
        Proyectos proyecto = FabricaLogica.getInstancia().consultarProyectos(proyectoSeleccionado(),0);
        frmEdicionProyecto frmEdicion = new frmEdicionProyecto();
        frmEdicion.setVisible(true);
