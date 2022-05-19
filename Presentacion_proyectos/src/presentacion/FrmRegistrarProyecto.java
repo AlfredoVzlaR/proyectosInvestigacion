@@ -480,6 +480,10 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
     private void tablaProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProfesoresMouseClicked
         int fila= tablaProfesores.getSelectedRow();
         Profesor profesor = (Profesor) tablaProfesores.getValueAt(fila,0);
+        if(cbInvestigadorPrincipal.getSelectedItem().toString().equals(profesor.toString())){
+            JOptionPane.showMessageDialog(this,"No se puede elegir este profesor porque ya está elegido como el investigador principal.","Advertencia.",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         agregarProfesorLista(profesor);
         profesoresParticipantes.add(profesor);
     }//GEN-LAST:event_tablaProfesoresMouseClicked

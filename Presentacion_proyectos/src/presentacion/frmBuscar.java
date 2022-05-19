@@ -64,7 +64,8 @@ public class frmBuscar extends javax.swing.JFrame {
             return;
         }
 
-        modeloTabla.setRowCount(0);
+        else{
+            modeloTabla.setRowCount(0);
         
             Object[] fila = new Object[7];
             fila[0] = proyecto.getCodigo();
@@ -75,22 +76,11 @@ public class frmBuscar extends javax.swing.JFrame {
             fila[5] = proyecto.getFechaInicio();
             fila[6] = proyecto.getFechaFinalizacion();
             modeloTabla.addRow(fila);
-        DefaultTableModel modeloTablaProfesores = (DefaultTableModel) tbProfesores.getModel();
-        
-        int rowCount = modeloTablaProfesores.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            modeloTablaProfesores.removeRow(i);
+            
+            llenarTablaProfesores(proyecto);
         }
-        try{
-        proyecto.getProfesores().forEach(profesor
-                -> {
-            Object[] filaProfesor = new Object[4];
-            filaProfesor[0] = profesor.getNombre();
-            filaProfesor[1] = profesor.getApellido();
-            filaProfesor[2] = profesor.getDespacho();
-            filaProfesor[3] = profesor.getTelefono() ;
-            modeloTablaProfesores.addRow(filaProfesor);
-        });}catch(Exception e){}
+        
+        
     }
     private boolean mostrarError()
     {
@@ -137,7 +127,19 @@ public class frmBuscar extends javax.swing.JFrame {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tbProfesores.getModel();
         modeloTabla.setRowCount(0);
     }
-    
+    private void llenarTablaProfesores(Proyectos proyecto){
+        DefaultTableModel modeloTablaProfesores = (DefaultTableModel) tbProfesores.getModel();
+        try{
+        proyecto.getProfesores().forEach(profesor
+                -> {
+            Object[] filaProfesor = new Object[4];
+            filaProfesor[0] = profesor.getNombre();
+            filaProfesor[1] = profesor.getApellido();
+            filaProfesor[2] = profesor.getDespacho();
+            filaProfesor[3] = profesor.getTelefono() ;
+            modeloTablaProfesores.addRow(filaProfesor);
+        });}catch(Exception e){}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -270,6 +272,11 @@ public class frmBuscar extends javax.swing.JFrame {
         jLabel5.setText("Profesores.");
 
         jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,10 +351,16 @@ public class frmBuscar extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void tbProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProyectosMouseClicked
-        Proyectos proyecto = FabricaLogica.getInstancia().consultarProyectos(proyectoSeleccionado(),0);
-        frmEdicionProyecto frmEdicion = new frmEdicionProyecto();
-        frmEdicion.setVisible(true);
-        frmEdicion.abrirBuscarProyecto(proyecto);
+        if(comboBoxBusqueda.getSelectedItem() == "Periodo"){
+            limpiarTablaProfesores();
+            Proyectos proyecto = FabricaLogica.getInstancia().consultarProyectos(proyectoSeleccionado(),0);
+            if(proyecto==null){
+                mostrarMsjNoProyecto();
+            }
+            else{
+                llenarTablaProfesores(proyecto);
+            }
+        }
     }//GEN-LAST:event_tbProyectosMouseClicked
 
     private void comboBoxBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxBusquedaActionPerformed
@@ -365,6 +378,13 @@ public class frmBuscar extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtBusquedaKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       Proyectos proyecto = FabricaLogica.getInstancia().consultarProyectos(proyectoSeleccionado(),0);
+       frmEdicionProyecto frmEdicion = new frmEdicionProyecto();
+       frmEdicion.setVisible(true);
+       frmEdicion.abrirBuscarProyecto(proyecto);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 //    /**
 //     * @param args the command line arguments
