@@ -37,7 +37,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     }
 
     public void mostrarDetallesProyecto(Proyectos proyecto) {
-        txtCodigo.setText(proyecto.getCodigo());
+        txtLinea.setText(proyecto.getCodigo());
         txtNombre.setText(proyecto.getNombre());
         txtAcronimo.setText(proyecto.getAcronimo());
         txtPrograma.setText(proyecto.getProgramaInvestigacion());
@@ -46,7 +46,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         fechaInicio.setDate(proyecto.getFechaInicio());
         fechaFin.setDate(proyecto.getFechaFinalizacion());
         cbInvestigador.addItem(proyecto.getInvestigadorPrincipal());
-        txtLinea.setText(proyecto.getLineaInvestigacion());
+        txtCodigo.setText(proyecto.getLineaInvestigacion());
         txtPresupuesto.setText(String.valueOf(proyecto.getPresupuesto()));
         
         if(proyecto.getProfesores().isEmpty()){
@@ -95,12 +95,12 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     private boolean actualizar() {
         if (FabricaLogica.getInstancia().verificaElementosSeleccionados(tbIntegrantes)) {
             Proyectos proyecto = new Proyectos();
-            proyecto.setCodigo(txtCodigo.getText());
+            proyecto.setCodigo(txtLinea.getText());
             proyecto.setNombre(txtNombre.getText());
             proyecto.setAcronimo(txtAcronimo.getText());
             proyecto.setProgramaInvestigacion(txtPrograma.getText());
             proyecto.setInvestigadorPrincipal(cbInvestigador.getItemAt(0));
-            proyecto.setLineaInvestigacion(txtLinea.getText());
+            proyecto.setLineaInvestigacion(txtCodigo.getText());
             proyecto.setDesarrolloFinancia(txtDesarrollo.getText());
             proyecto.setFechaInicio(fechaInicio.getDate());
             proyecto.setFechaFinalizacion(fechaFin.getDate());
@@ -154,7 +154,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
+        txtLinea = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtAcronimo = new javax.swing.JTextField();
         txtPrograma = new javax.swing.JTextField();
@@ -162,7 +162,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         fechaInicio = new com.toedter.calendar.JDateChooser();
         fechaFin = new com.toedter.calendar.JDateChooser();
         cbInvestigador = new javax.swing.JComboBox<>();
-        txtLinea = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         txtPresupuesto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbIntegrantes = new javax.swing.JTable();
@@ -170,6 +170,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         tbDisponibles = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        botonActualizar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -226,10 +227,10 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel14.setText("Presupuesto:");
 
-        txtCodigo.setEditable(false);
-        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+        txtLinea.setEditable(false);
+        txtLinea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoActionPerformed(evt);
+                txtLineaActionPerformed(evt);
             }
         });
 
@@ -239,7 +240,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
             }
         });
 
-        txtLinea.setEditable(false);
+        txtCodigo.setEditable(false);
 
         tbIntegrantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -297,6 +298,13 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel11.setText("Integrantes");
 
+        botonActualizar.setText("Actualizar");
+        botonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -332,11 +340,11 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
                                 .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtLinea)
+                                .addComponent(txtCodigo)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(0, 0, Short.MAX_VALUE)))))
                     .addComponent(jLabel1))
                 .addGap(65, 65, 65)
@@ -346,7 +354,8 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel11))
+                            .addComponent(jLabel11)
+                            .addComponent(botonActualizar))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -360,7 +369,7 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
@@ -408,13 +417,15 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel13)
-                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(204, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(botonActualizar)
+                        .addContainerGap(161, Short.MAX_VALUE))))
         );
 
         pack();
@@ -425,9 +436,13 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProgramaActionPerformed
 
-    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+    private void txtLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLineaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoActionPerformed
+    }//GEN-LAST:event_txtLineaActionPerformed
+
+    private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        actualizar();        // TODO add your handling code here:
+    }//GEN-LAST:event_botonActualizarActionPerformed
 
 //    private boolean agregarProfesorLista(Profesor profesor) {
 //        try {
@@ -482,9 +497,10 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Doctor> cbInvestigador;
-    private com.toedter.calendar.JDateChooser fechaFin;
-    private com.toedter.calendar.JDateChooser fechaInicio;
+    private javax.swing.JButton botonActualizar;
+    private static javax.swing.JComboBox<Doctor> cbInvestigador;
+    private static com.toedter.calendar.JDateChooser fechaFin;
+    private static com.toedter.calendar.JDateChooser fechaInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -504,15 +520,15 @@ public class frmEdicionProyecto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable tbDisponibles;
-    private javax.swing.JTable tbIntegrantes;
-    private javax.swing.JTextField txtAcronimo;
+    private static javax.swing.JTable tbDisponibles;
+    private static javax.swing.JTable tbIntegrantes;
+    private static javax.swing.JTextField txtAcronimo;
     private static javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtDesarrollo;
+    private static javax.swing.JTextField txtDesarrollo;
     private javax.swing.JTextArea txtDescripcion;
-    private javax.swing.JTextField txtLinea;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPresupuesto;
-    private javax.swing.JTextField txtPrograma;
+    private static javax.swing.JTextField txtLinea;
+    private static javax.swing.JTextField txtNombre;
+    private static javax.swing.JTextField txtPresupuesto;
+    private static javax.swing.JTextField txtPrograma;
     // End of variables declaration//GEN-END:variables
 }

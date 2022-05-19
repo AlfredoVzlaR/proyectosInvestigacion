@@ -63,8 +63,7 @@ public class CtrlRegistrar {
         List<Proyectos> proyectos = FabricaProyectos.getInstancia().consultarProyectos();
         
         for(Proyectos proyectoVerificar:proyectos){
-            if(proyectoVerificar.getCodigo().equals(proyecto.getCodigo())
-                    ||proyectoVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())
+            if(proyectoVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())
                     ||proyectoVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo())){
                 JOptionPane.showMessageDialog(null,"Ya existe un proyecto con ese código,nombre,acrónimo.","Error!", JOptionPane.ERROR_MESSAGE);
                 return false;

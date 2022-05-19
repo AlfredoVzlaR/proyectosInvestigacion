@@ -22,7 +22,6 @@ import negocio.FabricaLogica;
  * @author German
  */
 public class FrmRegistrarProyecto extends javax.swing.JFrame {
-    Proyectos proyecto;
     ArrayList<Profesor> profesores;
     List<Profesor> profesoresParticipantes;
     DefaultListModel modeloIntegrantes = new DefaultListModel();
@@ -36,6 +35,8 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
         cbInvestigadorPrincipal.addItem(new Profesor("Seleccione un doctor","","",""));
         consultarProfesores();
         consultarLineasInvestigacion();
+        fechaInicio.setDate(new Date());
+        fechaFinal.setDate(new Date());
     }
     public static void abrirFrmRegistarProyecto(){
         FrmRegistrarProyecto abrir = new FrmRegistrarProyecto();
@@ -43,7 +44,7 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
     }
     private boolean guardar(){
         if(FabricaLogica.getInstancia().verificarInformacionRegistrar(txtPrograma.getText(), txtLineaInvestigacion.getText(), txtNombreProyecto.getText(), txtAcronimo.getText(), fechaInicio.getDate(), fechaFinal.getDate(), Float.parseFloat(txtPresupuesto.getText()), txtDescripcion.getText(),cbInvestigadorPrincipal.getSelectedIndex(),profesoresParticipantes)){
-            proyecto = new Proyectos();
+            Proyectos proyecto = new Proyectos();
             proyecto.setCodigo(txtCodigo.getText());
             proyecto.setProgramaInvestigacion(txtPrograma.getText());
             proyecto.setLineaInvestigacion(txtLineaInvestigacion.getText());
