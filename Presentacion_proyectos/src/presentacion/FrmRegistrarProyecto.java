@@ -42,7 +42,7 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
         FrmRegistrarProyecto abrir = new FrmRegistrarProyecto();
         abrir.setVisible(true);
     }
-    private boolean guardar(){
+    private void guardar(){
         if(FabricaLogica.getInstancia().verificarInformacionRegistrar(txtPrograma.getText(), txtLineaInvestigacion.getText(), txtNombreProyecto.getText(), txtAcronimo.getText(), fechaInicio.getDate(), fechaFinal.getDate(), Float.parseFloat(txtPresupuesto.getText()), txtDescripcion.getText(),cbInvestigadorPrincipal.getSelectedIndex(),profesoresParticipantes)){
             Proyectos proyecto = new Proyectos();
             proyecto.setCodigo(txtCodigo.getText());
@@ -58,22 +58,23 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
             
             if(fechaInicio.getDate().after(fechaFinal.getDate())){
                 JOptionPane.showMessageDialog(this, "La fecha inicial no puede ser mayor a la fecha de fin.", "Error!", JOptionPane.ERROR_MESSAGE);
-                return false;
+                return;
             }
             
             proyecto.setInvestigadorPrincipal((Doctor) cbInvestigadorPrincipal.getSelectedItem());
             if(profesoresParticipantes.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Se debe elegir al menos 1 profesor", "Error!", JOptionPane.WARNING_MESSAGE);
-                return false;
+                return;
             }
             proyecto.setProfesores(profesoresParticipantes);
+            
+            List<Proyectos> profesoresVerificar = FabricaLogica.getInstancia().consultarProyectos();
+            
             if(FabricaLogica.getInstancia().verificarRegistrarProyecto(proyecto)==true){
                 FabricaLogica.getInstancia().registrarProyecto(proyecto); 
                 limpiar();
-                return true;
             }
         }
-        return false;
     }
     /**
      * This method is called from within the constructor to initialize the form.

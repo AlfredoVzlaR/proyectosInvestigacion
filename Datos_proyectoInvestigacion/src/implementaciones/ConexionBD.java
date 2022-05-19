@@ -23,10 +23,13 @@ public class ConexionBD implements IConexionBD{
     private static final String HOST = "localhost";
     private static final int PUERTO = 27017;
     private static final String BASE_DATOS = "proyectos";
+    MongoDatabase baseDatos=null;
     
     private static ConexionBD conexion;
     
-    private ConexionBD(){}
+    private ConexionBD(){
+        
+    }
     
     public static ConexionBD getConexionBD() {
         if (conexion == null) {
@@ -37,6 +40,7 @@ public class ConexionBD implements IConexionBD{
 
     @Override
     public MongoDatabase crearConexion() {
+        if(baseDatos==null){
         try {
             //CONFIGURACIÓN PARA QUE MONGODRIVE REALICE EL MAPEO DE POJOS AUMATICAMENTE
             CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
@@ -59,5 +63,7 @@ public class ConexionBD implements IConexionBD{
             System.err.println(ex.getMessage());
             return null;
         }
+        }
+        return baseDatos;
     }
 }

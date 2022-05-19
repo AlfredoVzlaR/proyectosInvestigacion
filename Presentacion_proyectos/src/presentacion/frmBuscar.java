@@ -28,6 +28,10 @@ public class frmBuscar extends javax.swing.JFrame {
     }
     private void buscar()
     {
+        if(fechaInicio.getDate().after(fechaFin.getDate())){
+            JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser después que la fecha final.","Advertencia",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         limpiarTablaProyectos();
         limpiarTablaProfesores();
         if(mostrarError()){
