@@ -4,16 +4,10 @@
  * and open the template in the editor.
  */
 package presentacion;
-
-
-import java.awt.event.KeyEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import dominio.Doctor;
 import dominio.LineaInvestigacion;
 import dominio.NoDoctor;
@@ -46,6 +40,39 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
     public static void abrirFrmRegistarProyecto(){
         FrmRegistrarProyecto abrir = new FrmRegistrarProyecto();
         abrir.setVisible(true);
+    }
+    private boolean guardar(){
+        if(FabricaLogica.getInstancia().verificarInformacionRegistrar(txtPrograma.getText(), txtLineaInvestigacion.getText(), txtNombreProyecto.getText(), txtAcronimo.getText(), fechaInicio.getDate(), fechaFinal.getDate(), Float.parseFloat(txtPresupuesto.getText()), txtDescripcion.getText(),cbInvestigadorPrincipal.getSelectedIndex(),profesoresParticipantes)){
+            proyecto = new Proyectos();
+            proyecto.setCodigo(txtCodigo.getText());
+            proyecto.setProgramaInvestigacion(txtPrograma.getText());
+            proyecto.setLineaInvestigacion(txtLineaInvestigacion.getText());
+            proyecto.setNombre(txtNombreProyecto.getText());
+            proyecto.setAcronimo(txtAcronimo.getText());
+            proyecto.setDesarrolloFinancia(txtDesarrollo.getText());
+            proyecto.setDescripcionObjetivos(txtDescripcion.getText());
+            proyecto.setFechaInicio(fechaInicio.getDate());
+            proyecto.setFechaFinalizacion(fechaFinal.getDate());
+            proyecto.setPresupuesto(Float.parseFloat(txtPresupuesto.getText()));
+            
+            if(fechaInicio.getDate().after(fechaFinal.getDate())){
+                JOptionPane.showMessageDialog(this, "La fecha inicial no puede ser mayor a la fecha de fin.", "Error!", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            
+            proyecto.setInvestigadorPrincipal((Doctor) cbInvestigadorPrincipal.getSelectedItem());
+            if(profesoresParticipantes.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Se debe elegir al menos 1 profesor", "Error!", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            proyecto.setProfesores(profesoresParticipantes);
+            if(FabricaLogica.getInstancia().verificarRegistrarProyecto(proyecto)==true){
+                FabricaLogica.getInstancia().registrarProyecto(proyecto); 
+                limpiar();
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -431,27 +458,7 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       
-        
-        if(FabricaLogica.getInstancia().verificarInformacionRegistrar(txtPrograma.getText(), txtLineaInvestigacion.getText(), txtNombreProyecto.getText(), txtAcronimo.getText(), fechaInicio.getDate(), fechaFinal.getDate(), Float.parseFloat(txtPresupuesto.getText()), txtDescripcion.getText(),cbInvestigadorPrincipal.getSelectedIndex(),profesoresParticipantes)){
-            proyecto = new Proyectos();
-            proyecto.setCodigo(txtCodigo.getText());
-            proyecto.setProgramaInvestigacion(txtPrograma.getText());
-            proyecto.setLineaInvestigacion(txtLineaInvestigacion.getText());
-            proyecto.setNombre(txtNombreProyecto.getText());
-            proyecto.setAcronimo(txtAcronimo.getText());
-            proyecto.setDesarrolloFinancia(txtDesarrollo.getText());
-            proyecto.setDescripcionObjetivos(txtDescripcion.getText());
-            proyecto.setFechaInicio(fechaInicio.getDate());
-            proyecto.setFechaFinalizacion(fechaFinal.getDate());
-            proyecto.setPresupuesto(Float.parseFloat(txtPresupuesto.getText()));
-            
-            proyecto.setInvestigadorPrincipal((Doctor) cbInvestigadorPrincipal.getSelectedItem());
-//            proyecto.setProfesores(profesores);
-            proyecto.setProfesores(profesoresParticipantes);
-            FabricaLogica.getInstancia().registrarProyecto(proyecto);                                            
-            limpiar();
-        }        
+      guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -525,6 +532,8 @@ public class FrmRegistrarProyecto extends javax.swing.JFrame {
         modeloIntegrantes.clear();
         tablaLineas.clearSelection();
         tablaProfesores.clearSelection();
+        fechaInicio.setDate(new Date());
+        fechaFinal.setDate(new Date());
     }
     
     private void consultarProfesores() {

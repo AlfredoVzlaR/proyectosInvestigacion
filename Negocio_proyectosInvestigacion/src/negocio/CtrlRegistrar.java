@@ -59,5 +59,19 @@ public class CtrlRegistrar {
         JOptionPane.showMessageDialog(null, "No fue posible agregar el proyecto", "Error", JOptionPane.ERROR_MESSAGE);
         return false;
     }
+    public boolean verificarRegistrarProyecto(Proyectos proyecto){
+        List<Proyectos> proyectos = FabricaProyectos.getInstancia().consultarProyectos();
+        
+        for(Proyectos proyectoVerificar:proyectos){
+            if(proyectoVerificar.getCodigo().equalsIgnoreCase(proyecto.getCodigo())
+                    ||proyectoVerificar.getNombre().equalsIgnoreCase(proyecto.getNombre())
+                    ||proyectoVerificar.getAcronimo().equalsIgnoreCase(proyecto.getAcronimo())){
+                JOptionPane.showMessageDialog(null,"Ya existe un proyecto con ese código,nombre,acrónimo.","Error!", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
 }

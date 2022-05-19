@@ -25,6 +25,7 @@ public interface ILogica {
     List<Doctor> consultarDoctores();
     public List<NoDoctor> consultarNoDoctores();
     boolean registrarProyecto(Proyectos proyecto);
+    boolean verificarRegistrarProyecto(Proyectos proyecto);
     boolean actualizarProyecto(Proyectos proyecto);
     List<Proyectos> consultarProyectosPeriodo(Date inicio, Date fin);
     boolean verificarInformacionAgregar(String noSecuencia,String titulo, List<Profesor> profesores, String nombreRevista, String editorial, String volumen, String pagInicio, String pagFin );

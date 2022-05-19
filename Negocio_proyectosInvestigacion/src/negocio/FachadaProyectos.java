@@ -137,4 +137,9 @@ public class FachadaProyectos implements ILogica{
     public boolean verificarActualizar(Proyectos proyecto) {
        return ctrlEditar.verificarActualizar(proyecto);
     }
+
+    @Override
+    public boolean verificarRegistrarProyecto(Proyectos proyecto) {
+        return ctrlRegistrar.verificarRegistrarProyecto(proyecto);
+    }
 }
